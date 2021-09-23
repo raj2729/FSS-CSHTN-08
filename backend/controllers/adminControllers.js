@@ -71,10 +71,45 @@ const getCoursesSummary = asyncHandler(async (req,res)=> {
   })
 })
 
+// 5. Assign instructor
+const assignInstructor = asyncHandler(async (req,res)=> {
+  const {userId,decision} = req.params;
+  if(decision==="accept") {
+    const Instructor =  await User.findByIdAndUpdate(userId, {isInstructor: true, appliedForInstructor: false}, {new: true})
+    res.status(200).json({
+      success: true,
+      message: "Instructor assigned",
+      data: Instructor,
+    })
+  } else  if(decision==="reject") {
+    const Instructor =  await User.findByIdAndUpdate(userId, {appliedForInstructor: false}, {new: true})
+    res.status(200).json({
+      success: true,
+      message: "Instructor not assigned",
+      data: Instructor
+    })
+  } else {
+    res.status(200).json({
+      success: false,
+      error: "Enter proper decision"
+    })
+  }
+})
+
+// 6. Get all Users that requested for instructor position
+const userRequests = asyncHandler((async(req,res)=> {
+  const requests = await User.find({appliedForInstructor: true})
+  res.status(200).json({
+    success: true,
+    data: requests
+  })
+}))
+
 module.exports = {
     adminLogin,
     getAllStudents,
     getAllInstructors,
-    getCoursesSummary
+    getCoursesSummary,
+    userRequests
 };
 

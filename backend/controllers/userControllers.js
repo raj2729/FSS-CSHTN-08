@@ -9,6 +9,7 @@ LIST OF CONTROLLERS
 2. Login User
 3. Get user Details
 4. Update User
+5. Apply for instructor
 */
 
 // Register New user
@@ -199,5 +200,14 @@ const updateUserDetails = asyncHandler(async (req, res) => {
     });
   }
 });
+
+const applyForInstructor = asyncHandler(async(req,res)=> {
+  const {userId} = req.params
+  const user = await User.findByIdAndUpdate(userId,{appliedForInstructor:true},{new:true})
+  res.status(200).json({
+    success:true,
+    data: user
+  })
+})
 
 module.exports = { registerUser, userLogin, getUserDetails, updateUserDetails };

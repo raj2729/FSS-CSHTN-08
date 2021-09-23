@@ -25,6 +25,10 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    appliedForInstructor: {
+      type: Boolean,
+      default: false,
+    },
     profilePicture: {
       type: String,
       // required: true,
@@ -40,6 +44,10 @@ const userSchema = mongoose.Schema(
       type: String,
       // required: true,
       default: "",
+    },
+    resumeLink: {
+      type: String,
+      default: ""
     },
     mobileNumber: {
       type: Number,
