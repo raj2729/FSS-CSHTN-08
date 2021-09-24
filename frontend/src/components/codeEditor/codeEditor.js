@@ -104,6 +104,7 @@ class CodeEditor extends Component {
 
     return (
       <div className="App" >
+      <Header className="header" />
         <section className="playground">
           <div className="code-editor html-code">
             <div className="editor-header">HTML</div>
