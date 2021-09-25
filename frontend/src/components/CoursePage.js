@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, ButtonGroup, Grid, Input, Paper } from "@material-ui/core";
+import { Button, Grid, Input, Paper } from "@material-ui/core";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import HeadsetMicIcon from "@material-ui/icons/HeadsetMic";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
@@ -21,37 +21,24 @@ import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
 import CloseIcon from "@material-ui/icons/Close";
 import TextField from "@material-ui/core/TextField";
-
-//
 import { Box } from "@material-ui/core";
-
-import quiz from "../assets/quiz.png";
-import discussion from "../assets/discussion.png";
 import Carousel from "react-material-ui-carousel";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { Link } from "react-router-dom";
-
 import VideoPlayer from "react-video-js-player";
 import Modal from "@material-ui/core/Modal";
-import Container from "@material-ui/core/Container";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-
-//
-
 import {
   oneCourseDetails,
   allUserCoursesAction,
 } from "../actions/courseActions";
-// Loader
 import { CircularProgress } from "@material-ui/core";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
-
-// Importing Header
 import Header from "./Header";
 import { isUserEnrolled } from "../actions/userActions";
 import { createAssignment } from "../actions/assignmentActions";
-// import PlayLecture from "./PlayLecture";
+import QuizAnswers from "./quiz/QuizAnswers";
 
 const useStyles = makeStyles((theme) => ({
   app: {
@@ -83,9 +70,9 @@ const useStyles = makeStyles((theme) => ({
     background: "#212121",
     width: "300px",
     borderRadius: "999px !important",
-    '&:hover': {
-      backgroundColor: '#616161'
-    }
+    "&:hover": {
+      backgroundColor: "#616161",
+    },
   },
   enrollText: {
     color: "white",
@@ -145,10 +132,51 @@ const useStyles = makeStyles((theme) => ({
   label: {
     textTransform: "capitalize",
   },
-  modal: {
+  modal1: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    margin: "10px 20px",
+  },
+  modal2: {
+    overflow: "auto",
+  },
+  paper: {
+    alignContent: "center",
+    margin: "3%",
+    padding: "10px 20px",
+  },
+  mainTitle: {
+    fontSize: "45px",
+    margin: "20px 20px 0px 20px",
+  },
+  submitButton: {
+    marginTop: "20px",
+    borderRadius: "999px",
+  },
+  question: {
+    fontSize: "24px",
+    marginBottom: "10px",
+    fontWeight: "500",
+    lineHeight: "35px",
+  },
+  answer: {
+    fontSize: "18px",
+    marginBottom: "10px",
+    fontWeight: "500",
+    lineHeight: "25px",
+    marginLeft: "10px",
+    display: "flex",
+  },
+  correctAnswer: {
+    color: "green",
+  },
+  results: {
+    display: "flex",
+    margin: "0 auto",
+    maxWidth: "170px",
+    textAlign: "center",
+    flexDirection: "column",
   },
   button: {
     width: "200px",
@@ -197,48 +225,6 @@ const useStyles = makeStyles((theme) => ({
     margin: "30px auto",
     padding: "20px",
   },
-  // image: {
-  //   backgroundImage:
-  //     "url(https://media.istockphoto.com/vectors/online-education-vector-id960268208)",
-  //   backgroundRepeat: "no-repeat",
-  //   backgroundColor:
-  //     theme.palette.type === "light"
-  //       ? theme.palette.grey[50]
-  //       : theme.palette.grey[900],
-  //   backgroundSize: "cover",
-  //   backgroundPosition: "",
-  // },
-  // paper: {
-  //   margin: theme.spacing(8, 4),
-  //   display: "flex",
-  //   flexDirection: "column",
-  //   alignItems: "center",
-  // },
-  // avatar: {
-  //   margin: theme.spacing(1),
-  //   backgroundColor: theme.palette.secondary.main,
-  // },
-  // form: {
-  //   width: "60%", // Fix IE 11 issue.
-  //   marginTop: theme.spacing(1),
-  // },
-  // submit: {
-  //   margin: theme.spacing(3, 0, 2),
-  // },
-  // //  ---------- MODAL
-
-  // details: {
-  //   alignItems: "center",
-  // },
-  // detailStudyMaterial: {
-  //   alignItems: "left",
-  // },
-
-  // helper: {
-  //   borderLeft: `2px solid ${theme.palette.divider}`,
-  //   padding: theme.spacing(1, 2),
-  // },
-  //  ----------
 }));
 
 const loadRazorPay = async () => {
@@ -272,11 +258,10 @@ function CoursePage({ history, match }) {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-  // const [isEnrolled, setIsEnrolled] = useState(false);
   const isEnrolledInCourse = useSelector((state) => state.isEnrolledInCourse);
-  const { loading: isEnrolledLoading, isEnrolled } = isEnrolledInCourse;
+  const { isEnrolled } = isEnrolledInCourse;
   const courseDetails = useSelector((state) => state.courseDetails);
-  const { loading, error, course } = courseDetails;
+  const { loading, course } = courseDetails;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -299,12 +284,11 @@ function CoursePage({ history, match }) {
 
   // CLOUDINARY - UPLOAD IMAGES
   const [imageSelected, setImageSelected] = useState("");
-  const [publicIdd, setPublicIdd] = useState("");
+  // const [publicIdd, setPublicIdd] = useState("");
   const [githubLink, setGithubLink] = useState("");
   // CLOUDINARY - UPLOAD IMAGES
 
   const submitAssignmentHandler = async () => {
-    // console.log(files[0]);
     const formData = new FormData();
     formData.append("file", imageSelected);
     formData.append("upload_preset", "ude8cxll");
@@ -313,7 +297,7 @@ function CoursePage({ history, match }) {
       .post("https://api.cloudinary.com/v1_1/dizvyn9b5/image/upload", formData)
       .then((response) => {
         console.log(response.data.secure_url);
-        setPublicIdd(response.data.secure_url);
+        // setPublicIdd(response.data.secure_url);
         dispatch(
           createAssignment(
             userInfo.data._id,
@@ -327,13 +311,63 @@ function CoursePage({ history, match }) {
       });
   };
 
+  const [currentQuizStep, setCurrentQuizStep] = useState("start");
+  const [quizData, setQuizData] = useState([]);
+  const [uodate, setUpdate] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [data, setData] = useState([]);
+
+  const fetchQuiz = async () => {
+    try {
+      const { data } = await axios.get(
+        `/course/getQuizByCourse/${match.params.id}`
+      );
+      setData(data.data);
+    } catch (err) {
+      console.log(err);
+    }
+    setUpdate(true);
+  };
+
   useEffect(() => {
-    // console.log(allUserCourses.courses.data);
+    fetchQuiz();
+  }, [match.params.id]);
+
+  const fetchQuizData = () => {
+    const formattedCategory = data.map((cat) => {
+      if (uodate) {
+        setUpdate(false);
+        const incorrectAnswersIndexes = cat.incorrect.length;
+        const randomIndex = Math.round(Math.random() * incorrectAnswersIndexes);
+        cat.incorrect.splice(randomIndex, 0, cat.correct);
+      }
+      return {
+        ...cat,
+        answers: cat.incorrect,
+      };
+    });
+    setQuizData(formattedCategory);
+    setCurrentQuizStep("results");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!quizData.length) {
+      fetchQuizData();
+    }
+    setOpen(true);
+  };
+
+  const resetQuiz = (e) => {
+    e.preventDefault();
+    setQuizData([]);
+    setCurrentQuizStep("start");
+    setOpen(false);
+  };
+
+  useEffect(() => {
     if (allUserCourses.courses && allUserCourses.courses.data) {
       allUserCourses.courses.data.map((oneCourse) => {
-        // console.log(oneCourse.courseId._id);
-        // console.log(match.params.id);
-
         if (oneCourse.courseId._id === match.params.id) {
           setIsUserEnrolledInCourseFromAllCourses(true);
         }
@@ -369,9 +403,8 @@ function CoursePage({ history, match }) {
       dispatch(
         createAssignment(userInfo.data._id, match.params.id, "", "", "unsubmit")
       );
-      alert("Course enrolled successfully");
     } else {
-      alert("Error in enrolling course");
+      alert("Could not complete payments");
     }
   };
 
@@ -422,7 +455,7 @@ function CoursePage({ history, match }) {
   };
 
   // ALERT
-  const [open, setOpen] = React.useState(true);
+  const [openAlt, setOpenAlt] = useState(true);
 
   return loading === false ? (
     <>
@@ -430,20 +463,15 @@ function CoursePage({ history, match }) {
       <div className={classes.app} style={{ marginTop: "100px" }}>
         <div className={classes.bigBox}>
           <h1 className={classes.bigText}>
-            {/* Web Development <br /> MERN Stack */}
             {course.data.name}
             <br />- {course.data.tagline}
           </h1>
           <br />
-          <p className={classes.smallText}>
-            {/* The Complete Web Development Course - Mastering MongoDB, ExpressJS,
-          ReactJS, NodeJS */}
-            {course.data.description}
-          </p>
+          <p className={classes.smallText}>{course.data.description}</p>
           <br />
           <span className={classes.bigBtn}>
             {isEnrolled && isEnrolled.success === true ? (
-              <Collapse in={open}>
+              <Collapse in={openAlt}>
                 <Alert
                   action={
                     <IconButton
@@ -451,7 +479,7 @@ function CoursePage({ history, match }) {
                       color="#664E88"
                       size="small"
                       onClick={() => {
-                        setOpen(false);
+                        setOpenAlt(false);
                       }}
                     >
                       <CloseIcon fontSize="inherit" />
@@ -463,7 +491,7 @@ function CoursePage({ history, match }) {
                 </Alert>
               </Collapse>
             ) : isUserEnrolledInCourseFromAllCourses === true ? (
-              <Collapse in={open}>
+              <Collapse in={openAlt}>
                 <Alert
                   action={
                     <IconButton
@@ -471,7 +499,7 @@ function CoursePage({ history, match }) {
                       color="inherit"
                       size="small"
                       onClick={() => {
-                        setOpen(false);
+                        setOpenAlt(false);
                       }}
                     >
                       <CloseIcon fontSize="inherit" />
@@ -492,7 +520,6 @@ function CoursePage({ history, match }) {
                   Enroll Now
                   <br />
                   for Rs.{course.data.price}
-                  {/* for Rs.699 */}
                 </span>
               </Button>
             ) : (
@@ -510,44 +537,47 @@ function CoursePage({ history, match }) {
           <Grid container spacing={3}>
             <Grid item xs={6} sm={4}>
               <div className={classes.halfDivText}>
-                <VideocamIcon className={classes.icons} fontSize='large' />
+                <VideocamIcon className={classes.icons} fontSize="large" />
                 Premium Course
               </div>
             </Grid>
             <Grid item xs={6} sm={4}>
               <div className={classes.halfDivText}>
-                <HeadsetMicIcon className={classes.icons} fontSize='large' />
+                <HeadsetMicIcon className={classes.icons} fontSize="large" />
                 Live Doubt Solving
               </div>
             </Grid>
             <Grid item xs={6} sm={4}>
               <div className={classes.halfDivText}>
-                <VerifiedUserIcon className={classes.icons} fontSize='large' />
+                <VerifiedUserIcon className={classes.icons} fontSize="large" />
                 Certificate
               </div>
             </Grid>
             <Grid item xs={6} sm={4}>
               <div className={classes.halfDivText}>
-                <DateRangeIcon className={classes.icons} fontSize='large' />
+                <DateRangeIcon className={classes.icons} fontSize="large" />
                 Lifetime Access
               </div>
             </Grid>
             <Grid item xs={6} sm={4}>
               <div className={classes.halfDivText}>
-                <GroupIcon className={classes.icons} fontSize='large' />
+                <GroupIcon className={classes.icons} fontSize="large" />
                 Mentorship
               </div>
             </Grid>
             <Grid item xs={6} sm={4}>
               <div className={classes.halfDivText}>
-                <TimerIcon className={classes.icons} fontSize='large' />
+                <TimerIcon className={classes.icons} fontSize="large" />
                 Self-Paced
               </div>
             </Grid>
           </Grid>
         </div>
         <div
-          style={{ padding: "50px 0px 50px 0px", background: "linear-gradient(45deg, #FE6429 30%, #FFB830 100%)" }}
+          style={{
+            padding: "50px 0px 50px 0px",
+            background: "linear-gradient(45deg, #FE6429 30%, #FFB830 100%)",
+          }}
         >
           <Grid>
             <Grid xs={12} sm={12}>
@@ -601,30 +631,125 @@ function CoursePage({ history, match }) {
                         onClick={handleOpen}
                       >
                         {userInfo === null ||
-                          isUserEnrolledInCourseFromAllCourses === false
+                        isUserEnrolledInCourseFromAllCourses === false
                           ? "Enroll course first"
                           : "View Chapter"}
                       </Button>
                       <Modal
-                        className={classes.modal}
+                        className={classes.modal1}
                         open={modalOpen}
                         onClose={handleClose}
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
                       >
                         <VideoPlayer
-                          src="https://res.cloudinary.com/dizvyn9b5/video/upload/v1631600691/sgf6ftvyhfrodkgau5lm.mp4"
+                          // src="https://res.cloudinary.com/dizvyn9b5/video/upload/v1631600691/sgf6ftvyhfrodkgau5lm.mp4"
+                          src={chapter.chapterVideoLink}
                           height="500%"
                         />
                       </Modal>
                     </div>
                   </AccordionDetails>
-                  <AccordionDetails style={{ alignItems: "left" }}>
+                  <AccordionDetails className={classes.details}>
+                    <span className={classes.column2}>
+                      {/* <Button
+                        disabled={
+                          userInfo === null ||
+                          isUserEnrolledInCourseFromAllCourses === false
+                        }
+                        color="primary"
+                        variant="contained"
+                        // onClick={handleOpen}
+                        style={{ marginRight: "50px" }}
+                      > */}
+                      {userInfo === null ||
+                      isUserEnrolledInCourseFromAllCourses === false ? (
+                        "Enroll course first"
+                      ) : currentQuizStep === "start" ? (
+                        <form
+                          onSubmit={handleSubmit}
+                          className={classes.results}
+                        >
+                          <Button
+                            disabled={
+                              userInfo === null ||
+                              isUserEnrolledInCourseFromAllCourses === false
+                            }
+                            // className={classes.button}
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                          >
+                            Go to Quiz
+                          </Button>
+                        </form>
+                      ) : (
+                        <Modal
+                          open={open}
+                          onClose={resetQuiz}
+                          className={classes.modal2}
+                        >
+                          <Paper className={classes.paper}>
+                            <QuizAnswers
+                              classes={classes}
+                              quizData={quizData}
+                              resetQuiz={resetQuiz}
+                              currentQuizStep={currentQuizStep}
+                              setCurrentQuizStep={setCurrentQuizStep}
+                            />
+                          </Paper>
+                        </Modal>
+                      )}
+                      {/* </Button> */}
+                      <Button
+                        disabled={
+                          userInfo === null ||
+                          isUserEnrolledInCourseFromAllCourses === false
+                        }
+                        color="primary"
+                        variant="contained"
+                        style={{ marginTop: "30px" }}
+                        // onClick={handleOpen}
+                      >
+                        {userInfo === null ||
+                        isUserEnrolledInCourseFromAllCourses === false ? (
+                          "Enroll course first"
+                        ) : (
+                          <a
+                            target="_blank"
+                            href="https://www.w3schools.com/html/"
+                            style={{ color: "white", textDecoration: "none" }}
+                          >
+                            Reference Study Material Links
+                          </a>
+                        )}
+                      </Button>
+                    </span>
+                  </AccordionDetails>
+                  {/* <AccordionDetails className={classes.details}>
+                    <div className={classes.column2}>
+                      <Button
+                        disabled={
+                          userInfo === null ||
+                          isUserEnrolledInCourseFromAllCourses === false
+                        }
+                        color="primary"
+                        variant="contained"
+                        // onClick={handleOpen}
+                      >
+                        {userInfo === null ||
+                        isUserEnrolledInCourseFromAllCourses === false
+                          ? "Enroll course first"
+                          : "Got to quiz"}
+                      </Button>
+                    </div>
+                  </AccordionDetails> */}
+                  {/* <AccordionDetails style={{ alignItems: "left" }}>
                     <div className={classes.column2}>
                       <strong>Study Materials:</strong>{" "}
                       {chapter.chapterStudyMaterial}
                     </div>
-                  </AccordionDetails>
+                  </AccordionDetails> */}
                 </Accordion>
               </Grid>
             ))}
@@ -632,7 +757,7 @@ function CoursePage({ history, match }) {
           <Box m={2} pt={3} />
           {userInfo ? (
             userInfo.data.isInstructor === true &&
-              userInfo.data._id === course.data.instructorId ? (
+            userInfo.data._id === course.data.instructorId ? (
               <Link
                 to={`/createChapter/${course.data._id}`}
                 style={{ textDecoration: "none" }}
@@ -658,18 +783,34 @@ function CoursePage({ history, match }) {
         </div>
         <div>
           <h1>Take a Quiz and test your skills!</h1>
-          <Button
-            disabled={
-              userInfo === null ||
-              isUserEnrolledInCourseFromAllCourses === false
-            }
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            onClick={() => history.push(`/quiz/${match.params.id}`)}
-          >
-            <span> Take a Quiz </span>
-          </Button>
+          {currentQuizStep === "start" ? (
+            <form onSubmit={handleSubmit} className={classes.results}>
+              <Button
+                disabled={
+                  userInfo === null ||
+                  isUserEnrolledInCourseFromAllCourses === false
+                }
+                className={classes.button}
+                type="submit"
+                variant="contained"
+                color="primary"
+              >
+                Start Quiz
+              </Button>
+            </form>
+          ) : (
+            <Modal open={open} onClose={resetQuiz} className={classes.modal2}>
+              <Paper className={classes.paper}>
+                <QuizAnswers
+                  classes={classes}
+                  quizData={quizData}
+                  resetQuiz={resetQuiz}
+                  currentQuizStep={currentQuizStep}
+                  setCurrentQuizStep={setCurrentQuizStep}
+                />
+              </Paper>
+            </Modal>
+          )}
           {userInfo === null ? (
             <p style={{ color: "red" }}>Login to access Quiz</p>
           ) : isUserEnrolledInCourseFromAllCourses === false ? (
@@ -679,14 +820,18 @@ function CoursePage({ history, match }) {
           )}
           <img
             src="https://cdn.dribbble.com/users/4908/screenshots/2787171/invoice-animation-dribbble.gif"
-            // src="https://cdn.dribbble.com/users/4241563/screenshots/11874468/media/7796309c77cf752615a3f9062e6a3b3d.gif"
             className={classes.img}
             alt="student"
           />
-          {/* <img src={quiz} className={classes.img} alt="student" /> */}
         </div>
         <div>
           <h1>Assignment Submission</h1>
+          {userInfo === null ||
+          isUserEnrolledInCourseFromAllCourses === false ? (
+            <p></p>
+          ) : (
+            <h4>Assignment Question: {course.data.assignmentQuestion}</h4>
+          )}
           <Input
             disabled={
               userInfo === null ||
@@ -766,12 +911,11 @@ function CoursePage({ history, match }) {
         <div>
           <h1>Solve Your Doubts Here!!</h1>
           <img
-            // src="http://www.rcdspcg.com/images/course/img17.gif"
             src="https://content.app-sources.com/s/70633399122816051/uploads/LOGOS/f5340454c0da1eabb125df9efff4b504_1-9593554.gif"
             className={classes.img}
             alt="student"
           />
-          {/* <img src={discussion} className={classes.img} alt="student" /> */}
+
           <br />
           <Button
             disabled={
@@ -799,7 +943,7 @@ function CoursePage({ history, match }) {
           style={{
             paddingLeft: "10%",
             paddingRight: "10%",
-            background: "linear-gradient(45deg, #FE6429 30%, #FFB830 100%)"
+            background: "linear-gradient(45deg, #FE6429 30%, #FFB830 100%)",
           }}
         >
           <h1 style={{ paddingTop: "70px" }}>Course Advantages</h1>
@@ -840,7 +984,7 @@ function CoursePage({ history, match }) {
             paddingLeft: "10%",
             paddingRight: "10%",
             paddingBottom: "10%",
-            background: "linear-gradient(45deg, #FE6429 30%, #FFB830 100%)"
+            background: "linear-gradient(45deg, #FE6429 30%, #FFB830 100%)",
           }}
         >
           <h1 style={{ paddingTop: "70px" }}>Have some query?</h1>
@@ -1012,7 +1156,7 @@ function CoursePage({ history, match }) {
       direction="column"
       alignItems="center"
       justify="center"
-      style={{ minHeight: '100vh' }}
+      style={{ minHeight: "100vh" }}
     >
       <Grid item xs={3}>
         <CircularProgress />

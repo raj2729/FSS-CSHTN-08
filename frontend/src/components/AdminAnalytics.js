@@ -25,19 +25,21 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 // var Component = React.Component;
+import { useSelector  } from "react-redux";
+
 import CanvasJSReact from './canvasjs.react';
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+    
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
 const rows = [
-  createData('ReactJS', 159, 6.0),
-  createData('NodeJS', 237, 9.0),
-  createData('AngularJS', 262, 16.0),
-  createData('Django', 262, 16.0),
+  createData('ReactJS Course', 'frontend', 'adnan'),
+  createData('HTML Course', 'frontend', 'adnan'),
+  createData('AngularJS', 'frontend', 'adnan'),
 ];
 
 const AdminAnalytics = () => {
@@ -45,54 +47,32 @@ const AdminAnalytics = () => {
     const [date, changeDate] = useState(new Date());
 
     const [open, setOpen] = useState(false)
-    useEffect(() => {
-      dispatch(getAllUsers());
-      dispatch(getAllInstructors())
-      dispatch(getCoursesSummary())
-      dispatch(getAllOrders())
-    }, [])
-    const [mode, setMode] = useState("dashboard")
+    const [cOrders, setcOrders] = useState(0)
 
-    const list = ()=> (
-        <div onClick={()=>{setOpen(false)}}>
-          <List>
-            <ListItem><Button onClick = {()=>setMode("dashboard")}><h4><i className="fa fa-th-large"></i> Dashboard</h4></Button></ListItem>
-            <ListItem><Button onClick = {()=>setMode("courses")}><h4><i className="fa fa-play-circle"></i> Courses</h4></Button></ListItem>
-            <ListItem><Button onClick = {()=>setMode("users")}><h4><i className="fa fa-users"></i> Students</h4></Button></ListItem>
-            <ListItem><Button onClick = {()=>setMode("instructors")}><h4><i className="fa fa-bar-chart"></i> Instructors</h4></Button></ListItem>
-            <ListItem><Button onClick = {()=>setMode("orders")}><h4><i className="fa fa-money"></i> Orders</h4></Button></ListItem>
-          </List>
-        </div>
-      )
+    const admin = useSelector((state)=> state.admin)
+    useEffect(()=> {
+      if(admin.allOrders) setcOrders(admin.allOrders.length)
+      console.log("cOrders",cOrders)
+      console.log("admin", admin)
+    },[admin])
+
       const splineoptions = {
         animationEnabled: true,
         title:{
-          text: "Monthly Sales - 2017"
+          text: "Monthly Sales"
         },
         axisX: {
           valueFormatString: "MMM"
         },
         axisY: {
-          title: "Sales (in USD)",
-          prefix: "$"
+          title: "No of couses sold",
         },
         data: [{
           yValueFormatString: "$#,###",
           xValueFormatString: "MMMM",
           type: "spline",
           dataPoints: [
-            { x: new Date(2017, 0), y: 25060 },
-            { x: new Date(2017, 1), y: 27980 },
-            { x: new Date(2017, 2), y: 42800 },
-            { x: new Date(2017, 3), y: 32400 },
-            { x: new Date(2017, 4), y: 35260 },
-            { x: new Date(2017, 5), y: 33900 },
-            { x: new Date(2017, 6), y: 40000 },
-            { x: new Date(2017, 7), y: 52500 },
-            { x: new Date(2017, 8), y: 32300 },
-            { x: new Date(2017, 9), y: 42000 },
-            { x: new Date(2017, 10), y: 37160 },
-            { x: new Date(2017, 11), y: 38400 }
+            { x: new Date(2021, 9), y: 23 },
           ]
         }]
       }
@@ -111,27 +91,16 @@ const AdminAnalytics = () => {
           indexLabelFontSize: 16,
           indexLabel: "{label} - {y}%",
           dataPoints: [
-            { y: 18, label: "Frontend" },
-            { y: 49, label: "Backend" },
-            { y: 9, label: "Database" },
-            { y: 5, label: "Data Science" },
-            { y: 19, label: "Cyber Security" }
+            { y: 27, label: "Frontend" },
+            { y: 18, label: "Backend" },
+            { y: 13.5, label: "Database" },
+            { y: 18, label: "Design" },
+            { y: 13.5, label: "Other" }
           ]
         }]
       }
     return (
         <div>
-         <div style={{display:"flex", justifyContent:"space-between", backgroundColor:"black"}}>
-                <Button  style={{ textDecoration: "none", color: "white" }} onClick={()=>{setOpen(true)}}><MenuIcon/>Admin Panel</Button>
-                <Button  style={{ textDecoration: "none", color: "white" }} onClick={()=>{alert('Log out implement karna hai')}}>Logout<ExitToAppIcon/></Button>
-            </div>
-            <Drawer
-                anchor={'left'}
-                open={open}
-                onClose={()=>{setOpen(false)}}
-            >
-                {list()}
-            </Drawer>
          <h1 style={{paddingLeft:"40px", paddingTop:"20px", paddingBottom:"20px"}}>Admin Panel Analytics</h1>
             <br />
             <Grid container>
@@ -143,8 +112,8 @@ const AdminAnalytics = () => {
                                             <TableRow>
                                 
                                             <TableCell><h4>Course</h4></TableCell>
-                                            <TableCell><h4>Sales</h4></TableCell>
-                                            <TableCell><h4>Price</h4></TableCell>
+                                            <TableCell><h4>Type</h4></TableCell>
+                                            <TableCell><h4>Instructor</h4></TableCell>
                                     
                                             </TableRow>
                                             </TableHead>

@@ -86,14 +86,14 @@ const QuizAnswers = ({
 
     return !processedAnswers || !processedAnswers.length ? (
         <>
-            <Typography variant="h1" className={classes.mainTitle}>
-                Answer flowing Questions:
+            <Typography variant="h3" className={classes.mainTitle}>
+                Quiz:
             </Typography>
             <form onSubmit={handleResult}>
                 <Grid container spacing={4}>
                     <Grid item xs={12}>
                         {quizData.map((quiz) => (
-                            <Paper key={quiz.question} className={classes.paper}>
+                            <Paper key={quiz.question} style={{borderLeft: '5px solid #3F51B5'}} className={classes.paper}>
                                 <Typography variant="h5" className={classes.question}>
                                     <span dangerouslySetInnerHTML={createMarkup(quiz.question)} />
                                 </Typography>
@@ -102,6 +102,7 @@ const QuizAnswers = ({
                                         Select answer:
                                     </InputLabel>
                                     <Select
+                                        fullWidth
                                         required
                                         name="answer"
                                         id="answer-select"
@@ -120,7 +121,8 @@ const QuizAnswers = ({
                             </Paper>
                         ))}
                         <Button
-                            className={classes.submitButton}
+                            style={{ display: 'flex', justifySelf: 'left' }}
+                            className={classes.button}
                             variant="contained"
                             color="primary"
                             type="submit"

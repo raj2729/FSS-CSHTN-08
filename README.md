@@ -1,30 +1,18 @@
 # Full Stack Simplified - E-Learning Platform
 
-<!-- ## Project Structure
-
-```
-.
-├── config/             -> Contains function to connect database
-├── controllers/        -> Backend logic for the api endpoints
-├── models/             -> Contains database models
-├── routes/             -> Defines api endpoints
-├── test/               -> Contains tests using chai and mocha
-├── index.js            -> Main File
-└── package.json        -> Npm package.json file
-``` -->
-
-## Features and technologies/frameworks used
+## Features and technologies used
 
 - Frontend Application developed using ReactJS
 - Backend Application developed using NodeJS and ExpressJS
 - User Authentication using JsonWebToken
-- Data stored in cloud via MongoDB Atlas
+- Data stored in MongoDB Atlas
 - User Interface developed using MaterialUI
 - Payments integration using Razorpay
-- Nodemailer used for sending emails to users
+- Email notification to users using Nodemailer
 - Sending SMS for mobile number verification using Twilio
-- File uploading using Cloudinary
 - Certificate of Completion using "pdfkit" npm package
+- Detailed analysis of the Quiz
+- Admin Dashboard for analytics
 
 <!-- GETTING STARTED -->
 
@@ -41,19 +29,19 @@
 
 - Clone the repository
   ```
-  git clone https://github.com/raj2729/Full-Stack-Simplified.git
+  git clone https://github.com/raj2729/FSS_CSHTN-08.git
   ```
 - Install NPM packages for Backend Application
 
   ```
-  cd Full-Stack-Simplified
+  cd FSS_CSHTN-08
   npm install
   ```
 
 - Install NPM packages for Frontend Application
 
   ```
-  cd Full-Stack-Simplified
+  cd FSS_CSHTN-08
   npm install
   ```
 

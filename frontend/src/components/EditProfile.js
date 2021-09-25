@@ -1,12 +1,7 @@
 import Box from "@material-ui/core/Box";
 import React, { useState } from "react";
-
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
-// import "./profilepage.css"
 import Grid from "@material-ui/core/Grid";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -16,17 +11,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import coursesEnrolled from "../assets/courses-enrolled.svg";
-import coursesCompleted from "../assets/courses-completed.svg";
 import Input from "@material-ui/core/Input";
 
-import { createTheme, ThemeProvider } from "@material-ui/core";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 // Importing Header
 import Header from "./Header";
-import { login } from "../actions/userActions";
 import { USER_LOGIN_SUCCESS } from "../constants/userConstants";
 
 const useStyles = makeStyles({
@@ -130,7 +121,7 @@ function EditProfilePage({ history }) {
   const { userInfo } = userLogin;
   const [names, setName] = useState(userInfo.data.name);
   // const [email, setEmail] = useState(userInfo.data.email);
-  const [password, setPassword] = useState(userInfo.data.password);
+  // const [password, setPassword] = useState(userInfo.data.password);
   const [github, setGithub] = useState(userInfo.data.githubLink);
   const [fb, setFb] = useState(userInfo.data.linkedInLink);
   const [phone, setPhone] = useState(userInfo.data.mobileNumber);
@@ -383,7 +374,7 @@ function EditProfilePage({ history }) {
 
   return (
     <>
-        <Header />
+      <Header />
       <Box m={2} pt={9} />
       <Card className={classes.profileCard}>
         <Grid container>

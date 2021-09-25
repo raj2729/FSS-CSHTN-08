@@ -7,28 +7,10 @@ import Container from "@material-ui/core/Container";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import { Box } from "@material-ui/core";
 
-import { createTheme, ThemeProvider } from "@material-ui/core";
-
 // Importing Header
 import Header from "./Header";
 
 import axios from "axios";
-import { createCourse } from "../actions/courseActions";
-
-const homePageTheme = createTheme({
-  palette: {
-    primary: {
-      main: "#809FFF",
-    },
-    secondary: {
-      main: "#000000",
-    },
-    text: {
-      primary: "#000000",
-      secondary: "#FEFFFF",
-    },
-  },
-});
 
 const useStyles = makeStyles({
   field: {
@@ -75,9 +57,9 @@ const CreateChapter = ({ history, match }) => {
     setChpNoError(false);
     setDescriptionError(false);
 
-    if (chpName == "") setChpNameError(true);
-    if (chpNo == "") setChpNoError(true);
-    if (description == "") setDescriptionError(true);
+    if (chpName === "") setChpNameError(true);
+    if (chpNo === "") setChpNoError(true);
+    if (description === "") setDescriptionError(true);
   };
 
   const createChapterSubmitHandler = async () => {
@@ -120,9 +102,7 @@ const CreateChapter = ({ history, match }) => {
 
   return (
     <>
-      <ThemeProvider theme={homePageTheme}>
-        <Header />
-      </ThemeProvider>
+      <Header />
       <Container>
         <Box m={2} pt={9} />
         <Typography

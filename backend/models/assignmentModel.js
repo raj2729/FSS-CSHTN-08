@@ -35,6 +35,11 @@ const assignmentSchema = mongoose.Schema(
       required: true,
       default: "unsubmit",
     },
+    assignmentComment: {
+      type: String,
+      // required: true,
+      default: "",
+    },
   },
   {
     timestamps: true,

@@ -17,6 +17,7 @@ const instructorRoutes = require("./routes/instructorRoutes");
 const contactFormRoute = require("./routes/contactFormRoutes");
 const careerFormRoute = require("./routes/careerFormRoutes");
 const otpRoutes = require("./routes/otpRoutes");
+const instructorPayments = require("./routes/instructorPaymentRoutes")
 
 dotenv.config();
 
@@ -88,6 +89,7 @@ app.use("/instructor", instructorRoutes);
 app.use("/contact", contactFormRoute);
 app.use("/career", careerFormRoute);
 app.use("/otp", otpRoutes);
+app.use("/instructorPayments", instructorPayments);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);

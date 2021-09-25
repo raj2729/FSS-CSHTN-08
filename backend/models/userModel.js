@@ -47,7 +47,7 @@ const userSchema = mongoose.Schema(
     },
     resumeLink: {
       type: String,
-      default: ""
+      default: "https://d.novoresume.com/images/doc/functional-resume-template.png"
     },
     mobileNumber: {
       type: Number,

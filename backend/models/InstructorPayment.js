@@ -7,8 +7,14 @@ const InstructorPaymentSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
+    amount: {
+      type: Number,
+      required: true,
+      default: 499
+    },
     date: {
       type: Date,
+      default: new Date(),
       required: true,
     },
     razorpay_payment_id: {

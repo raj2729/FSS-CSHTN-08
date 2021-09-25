@@ -6,6 +6,7 @@ const {
   getAllAssignmentsOfInstructor,
   updateToCertified,
   updateToUnSubmit,
+  updateAssignmentComment,
 } = require("../controllers/assignmentControllers");
 
 const {
@@ -31,5 +32,8 @@ router.route("/updateToCertified/:id").post(updateToCertified);
 
 // Update to Unsubmit
 router.route("/updateToUnSubmit/:id").post(updateToUnSubmit);
+
+// Update Assignment Comment
+router.route("/updateAssignmentComment/:id").post(updateAssignmentComment);
 
 module.exports = router;

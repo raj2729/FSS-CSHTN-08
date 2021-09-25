@@ -15,7 +15,7 @@ const {
   getAllCoursesOfInstructor,
   createChapter,
   createQuiz,
-  getQuizByCourse
+  getQuizByCourse,
 } = require("../controllers/courseControllers");
 
 const {

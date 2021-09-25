@@ -90,8 +90,6 @@ function MyCoursesUser() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
-  // const userLogin = useSelector((state) => state.userLogin);
-  // const { userInfo } = userLogin;
 
   const allUserCourses = useSelector((state) => state.allUserCourses);
   const { courses } = allUserCourses;
@@ -106,6 +104,8 @@ function MyCoursesUser() {
         })}
       >
         <div className={classes.drawerHeader} />
+        <Typography gutterBottom variant="h5" align="center" > My Courses</Typography>
+        <br/>
         <Grid container spacing={8}>
           {courses.data.map((course, index) => (
             <Grid item key={index} xs={12} sm={6} md={3}>

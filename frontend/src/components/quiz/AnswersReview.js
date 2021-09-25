@@ -13,7 +13,6 @@ const AnswersReview = ({ processedAnswers, classes, resetQuiz }) => {
                     <Typography variant="h2" className={classes.question}>
                         <span dangerouslySetInnerHTML={createMarkup(question)} />
                     </Typography>
-
                     {isCorrect ? (
                         <Typography
                             variant="h2"

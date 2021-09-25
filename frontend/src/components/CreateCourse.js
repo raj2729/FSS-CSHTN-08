@@ -9,30 +9,12 @@ import Box from "@material-ui/core/Box";
 import { Card } from "@material-ui/core";
 
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../actions/userActions";
-
-import { createTheme, ThemeProvider } from "@material-ui/core";
 
 // Importing Header
 import Header from "./Header";
 
 import axios from "axios";
 import { createCourse } from "../actions/courseActions";
-
-const homePageTheme = createTheme({
-  palette: {
-    primary: {
-      main: "#809FFF",
-    },
-    secondary: {
-      main: "#000000",
-    },
-    text: {
-      primary: "#000000",
-      secondary: "#FEFFFF",
-    },
-  },
-});
 
 const useStyles = makeStyles((theme) => ({
   field: {
@@ -129,9 +111,7 @@ export default function CreateCourse() {
 
   return (
     <>
-      <ThemeProvider theme={homePageTheme}>
-        <Header />
-      </ThemeProvider>
+      <Header />
       <Container>
         <Box m={2} pt={9}>
           <Typography
@@ -216,18 +196,15 @@ export default function CreateCourse() {
             type="file"
             classes={{
               root: classes.root,
-              // label: classes.label,
+            
             }}
             // variant="contained"
             color="primary"
             onChange={(event) => {
               setImage(event.target.files[0]);
-              // console.log(image);
+            
             }}
-            // disabled={
-            //   userInfo === null ||
-            //   isUserEnrolledInCourseFromAllCourses === false
-            // }
+           
             className="upload-btn"
           >
             Upload Image File

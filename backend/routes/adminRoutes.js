@@ -4,7 +4,8 @@ const {
     adminLogin,
     getAllStudents,
     getAllInstructors,
-    getCoursesSummary
+    getCoursesSummary,
+    userRequests
 } = require("../controllers/adminControllers");
 
 const { adminProtect } = require("../middlewares/protectedRoutes");
@@ -23,6 +24,8 @@ router.route("/getAllInstructors").get(adminProtect,getAllInstructors)
 
 // Get all courses summary
 router.route("/getCoursesSummary").get(adminProtect,getCoursesSummary)
+
+router.route("/userRequests").get(userRequests);
 
 
 module.exports = router;

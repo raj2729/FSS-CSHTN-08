@@ -9,9 +9,11 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import axios from 'axios'
 import { useSelector } from "react-redux";
+import Header from './Header';
 
 const styles = makeStyles((theme) => ({
     bar: {
+        marginTop: '70px',
         background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 100%)"
     },
     root: {
@@ -207,6 +209,7 @@ function DiscussionForum() {
     }
 
     return (
+<<<<<<< HEAD
         <Container>
             <AppBar position="static" className={classes.bar}>
                 <Toolbar>
@@ -250,55 +253,94 @@ function DiscussionForum() {
                                 }
                                 title={profile.name}
                                 subheader={question.datePosted}
+=======
+        <>
+            <Header />
+            <Container>
+                <AppBar position="static" className={classes.bar}>
+                    <Toolbar>
+                        <Typography className={classes.title} variant='h4'>Discussion Forum</Typography>
+                        <div className={classes.search}>
+                            <div className={classes.searchIcon}>
+                                <SearchIcon />
+                            </div>
+                            <InputBase
+                                placeholder="Search…"
+                                onChange={(e) => setFilter(e.target.value)}
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput,
+                                }}
+                                inputProps={{ 'aria-label': 'search' }}
+>>>>>>> master
                             />
-                            <CardContent style={{padding: '0px', paddingLeft: '10px'}}>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={9} md={9}>
-                                        <Typography variant="h6" color="textSecondary">
-                                            {question.question}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={4} md={3}>
-                                        <CardActions disableSpacing>
-                                            <IconButton
-                                                onClick={() => handleExpandClick(index)}
-                                                aria-expanded={expanded === index}
-                                                aria-label="show more"
-                                            >
-                                                <Typography>Replies</Typography>
-                                                {expanded === index ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                                            </IconButton>
-                                            <IconButton
-                                                onClick={() => {
-                                                    setQuestionId(question.qId)
-                                                    handleOpen1()
-                                                }}
-                                            >
-                                                <Typography>Reply</Typography>
-                                                <ReplyIcon />
-                                            </IconButton>
-                                        </CardActions>
-                                    </Grid>
-                                </Grid>
-                            </CardContent>
-                            <Collapse in={expanded === index} timeout="auto" unmountOnExit>
-                                {question.answers.map((answer, index) => {
-                                    return (
-                                        <Container key={index}>
-                                            <Typography variant='h5'>{answer.name}</Typography>
-                                            <Typography variant='caption'>
-                                                {answer.datePosted}
+                        </div>
+                    </Toolbar>
+                </AppBar>
+                <br />
+                {questions.map((question, index) => {
+                    const profile = question.profile
+                    if (question.question.includes(filter)) {
+                        return (
+                            <Card key={index} className={classes.card}>
+                                <CardHeader
+                                    avatar={
+                                        <Avatar src={profile.profilePicture} />
+                                    }
+                                    title={profile.name}
+                                    subheader={question.datePosted}
+                                />
+                                <CardContent style={{ padding: '0px', paddingLeft: '10px' }}>
+                                    <Grid container spacing={2}>
+                                        <Grid item xs={9} md={9}>
+                                            <Typography variant="h6" color="textSecondary">
+                                                {question.question}
                                             </Typography>
-                                            <Typography paragraph>
-                                                {answer.answer}
-                                            </Typography>
-                                        </Container>
-                                    )
-                                })}
-                            </Collapse>
-                        </Card>
-                    )
+                                        </Grid>
+                                        <Grid item xs={4} md={3}>
+                                            <CardActions disableSpacing>
+                                                <IconButton
+                                                    onClick={() => handleExpandClick(index)}
+                                                    aria-expanded={expanded === index}
+                                                    aria-label="show more"
+                                                >
+                                                    <Typography>Replies</Typography>
+                                                    {expanded === index ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                                                </IconButton>
+                                                <IconButton
+                                                    onClick={() => {
+                                                        setQuestionId(question.qId)
+                                                        handleOpen1()
+                                                    }}
+                                                >
+                                                    <Typography>Reply</Typography>
+                                                    <ReplyIcon />
+                                                </IconButton>
+                                            </CardActions>
+                                        </Grid>
+                                    </Grid>
+                                </CardContent>
+                                <Collapse in={expanded === index} timeout="auto" unmountOnExit>
+                                    {question.answers.map((answer, index) => {
+                                        return (
+                                            <Container key={index}>
+                                                <Typography variant='h5'>{answer.name}</Typography>
+                                                <Typography variant='caption'>
+                                                    {answer.datePosted}
+                                                </Typography>
+                                                <Typography paragraph>
+                                                    {answer.answer}
+                                                </Typography>
+                                            </Container>
+                                        )
+                                    })}
+                                </Collapse>
+                            </Card>
+                        )
+                    }
+                })
                 }
+<<<<<<< HEAD
             })
             }
             {/* <Card style={{width: "60%", padding:"10px", boxShadow: "5px 5px 25px 5px gray", margin:"5% auto", borderRadius:"30px"}}>
@@ -401,6 +443,75 @@ function DiscussionForum() {
 
             </Card>
         </Container>
+=======
+                <Button
+                    variant='contained'
+                    color='primary'
+                    startIcon={<AddIcon />}
+                    className={classes.add}
+                    onClick={handleOpen2}
+                >
+                    Ask Question
+                </Button>
+                <Modal
+                    className={classes.modal}
+                    open={open1}
+                    onClose={handleClose1}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Paper className={classes.paper}>
+                        <TextField
+                            variant='outlined'
+                            label='Enter your Answer'
+                            multiline
+                            maxRows={20}
+                            fullWidth
+                            className={classes.text}
+                            onChange={(e) => setAnswer(e.target.value)}
+                        />
+                        <Button
+                            variant='contained'
+                            color='primary'
+                            className={classes.post}
+                            onClick={() => {
+                                handlePostAnswer()
+                            }}
+                        >
+                            Post Answer
+                        </Button>
+                    </Paper>
+                </Modal>
+                <Modal
+                    className={classes.modal}
+                    open={open2}
+                    onClose={handleClose2}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Paper className={classes.paper}>
+                        <TextField
+                            variant='outlined'
+                            label='Enter your Question'
+                            multiline
+                            maxRows={20}
+                            fullWidth
+                            className={classes.text}
+                            onChange={(e) => setQuestion(e.target.value)}
+                        />
+                        <Button
+                            variant='contained'
+                            color='primary'
+                            className={classes.post}
+                            onClick={() => handlePostQuestion()}
+                        >
+                            Post Question
+                        </Button>
+                    </Paper>
+                </Modal>
+            </Container >
+        </>
+>>>>>>> master
     )
 }
 

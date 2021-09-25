@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     width:"100%",
+  },
+  margin:{
+marginRight:"20px"
   },
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
@@ -121,16 +124,6 @@ const useStyles = makeStyles((theme) => ({
 
 function MyCoursesInstr({ history, match }) {
   const classes = useStyles();
-  // const theme = useTheme();
-  // const [open, setOpen] = React.useState(false);
-
-  // const handleDrawerOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleDrawerClose = () => {
-  //   setOpen(false);
-  // };
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -151,13 +144,29 @@ function MyCoursesInstr({ history, match }) {
       </ThemeProvider>
 
       {loading === true ? (
+         <div>
+         <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: '100vh' }}
+      >
+      
+        <Grid item xs={3}>
         <CircularProgress />
+        </Grid>   
+      
+      </Grid> 
+          </div>
+   
       ) : (
         <main
-        // className={clsx(classes.content, {
-        //   [classes.contentShift]: open,
-        // })}
-        >
+        // // className={clsx(classes.content, {
+        // //   [classes.contentShift]: open,
+        // // })}
+         >
           <div className={classes.drawerHeader} />
           <Box textAlign="center" style={{zIndex:"0", marginLeft:"-170px"}}>
             <Link to={`/createCourse`} style={{ textDecoration: "none" }}>
@@ -165,6 +174,7 @@ function MyCoursesInstr({ history, match }) {
                 variant="contained"
                 color="secondary"
                 size="large"
+                justifyContent="center"
                 className={classes.button}
                 startIcon={<AddCircleIcon />}
               >
@@ -175,11 +185,15 @@ function MyCoursesInstr({ history, match }) {
 
           <Grid container spacing={8} style={{zIndex:"0", marginLeft:"-180px"}}>
             {instructorCourses.data.map((course, index) => (
+<<<<<<< HEAD
               <Grid item key={index} xs={12} sm={6} md={3}>
               <Link
                       to={`/course/${course._id}`}
                       style={{ textDecoration: "none" }}
                     >
+=======
+              <Grid item key={index} xs={12} sm={6} md={3} className={classes.margin}>
+>>>>>>> master
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.media}
@@ -206,7 +220,8 @@ function MyCoursesInstr({ history, match }) {
               </Grid>
             ))}
           </Grid>
-        </main>
+      
+     </main>
       )}
     </div>
   );

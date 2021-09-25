@@ -8,53 +8,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import GetAppIcon from "@material-ui/icons/GetApp";
-// import Header from "./Header";
-// import {Button} from '@material-ui/core';
-// import Button from '@material-ui/core/Button';
-// or
 import { Button } from "@material-ui/core";
-// import { generatePDF } from "../generatePdf";
 
 //PROGRESS
 import { CircularProgress } from "@material-ui/core";
 
-// import PDFLib from "pdf-lib";
-import { PDFDocument, rgb } from "pdf-lib";
-// import "./FileSaver";
-import { saveAs } from "file-saver";
-import { Fontkit } from "pdf-lib/cjs/types/fontkit";
-
-// const useStyles = makeStyles({
-
-//     table: {
-//       minWidth: 650,
-//     },
-//   });
-
-// const useStyles = makeStyles((theme) => ({
-
-//   }));
-
-import { createTheme, ThemeProvider } from "@material-ui/core";
-
 // Importing Header
 import Header from "./Header";
-import axios from "axios";
-
-const homePageTheme = createTheme({
-  palette: {
-    primary: {
-      main: "#809FFF",
-    },
-    secondary: {
-      main: "#000000",
-    },
-    text: {
-      primary: "#000000",
-      secondary: "#FEFFFF",
-    },
-  },
-});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -89,27 +49,6 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-
-function createData(assignmentCourseName, assignmentStatus, isCertified) {
-  return { assignmentCourseName, assignmentStatus, isCertified };
-}
-const DownloadButton = () => {
-  return (
-    <Button variant="contained" color="primary">
-      DOWNLOAD <GetAppIcon />
-    </Button>
-  );
-};
-
-// const rows = [
-//   createData(
-//     <p style={{ paddingLeft: "20%" }}>MERN Development</p>,
-//     <center>Pending</center>,
-//     <center>
-//       <DownloadButton />
-//     </center>
-//   ),
-// ];
 
 const Assignments = ({ history, match }) => {
   const classes = useStyles();
@@ -166,28 +105,6 @@ const Assignments = ({ history, match }) => {
         console.log(response);
         alert("Course certificate has been emailed to you");
       });
-
-    // fetch(
-    //   `http://localhost:8080/getCertificate/${assignmentUserName}/${assignmentCourse}`,
-    //   {
-    //     method: "POST",
-    //   }
-    // )
-    //   .then((response) => {
-    //     // console.log(response);
-    //     // return response;
-    //     console.log(response);
-    //     // response.json();
-    //   })
-    //   .then((response) => {
-    //     // setAssignments(response);
-    //     // setLoaded(true);
-    //     // return response;
-    //     console.log(response);
-    //   });
-    // axios.post("/", { name: "Raj Sanghavi", course: "DJ SANGHVI" });
-
-    // generatePDF(assignmentUserName, assignmentCourse);
   };
 
   return (
@@ -197,9 +114,7 @@ const Assignments = ({ history, match }) => {
         backgroundImage: "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)",
       }}
     >
-      <ThemeProvider theme={homePageTheme}>
-        <Header />
-      </ThemeProvider>
+      <Header />
       <h1 style={{ paddingTop: "30px" }}>Assignments</h1>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
@@ -210,6 +125,9 @@ const Assignments = ({ history, match }) => {
               </TableCell>
               <TableCell align="center">
                 <h1>Status</h1>
+              </TableCell>
+              <TableCell align="center">
+                <h1>Instructor Feedbacks</h1>
               </TableCell>
               <TableCell align="center">
                 <h1>Get Certificate</h1>
@@ -236,9 +154,13 @@ const Assignments = ({ history, match }) => {
                       {row.assignmentStatus === "unsubmit" ? (
                         <div>
                           <p>Pending</p>
-                          <p style={{ color: "red" }}>
-                            Assignment is not submitted yet
-                          </p>
+                          {row.assignmentComment === "" ? (
+                            <p style={{ color: "red" }}>
+                              Assignment is not submitted yet
+                            </p>
+                          ) : (
+                            <p></p>
+                          )}
                         </div>
                       ) : row.assignmentStatus === "submit" ? (
                         "Submitted"
@@ -247,6 +169,17 @@ const Assignments = ({ history, match }) => {
                       )}
                     </center>
                     {/* {row.assignmentStatus} */}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {row.assignmentComment === "" ? (
+                      <p style={{ color: "red", paddingLeft: "20%" }}>
+                        No feedbacks yet.
+                      </p>
+                    ) : (
+                      <p style={{ paddingLeft: "20%" }}>
+                        {row.assignmentComment}
+                      </p>
+                    )}
                   </TableCell>
                   <TableCell align="right">
                     <center>

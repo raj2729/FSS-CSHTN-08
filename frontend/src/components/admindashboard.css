@@ -11,10 +11,17 @@
 .userscard {
   box-shadow: 5px 5px 25px 5px gray !important;
   border-radius: 30px !important;
+<<<<<<< HEAD
   margin-left: 10%;
   margin-right: 10%;
   padding-bottom: 40px !important;
   margin-bottom: 40px !important;
+=======
+  margin-left: 5%;
+  margin-right: 5%;
+  padding-bottom: 20px !important;
+  margin-bottom: 20px !important;
+>>>>>>> master
 }
 .groupicon {
   width: 300px !important;
@@ -22,7 +29,11 @@
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
+<<<<<<< HEAD
   padding: 1px !important;
+=======
+  /* padding: 1px !important; */
+>>>>>>> master
   margin: 1px auto !important;
 }
 .calendar {
@@ -37,7 +48,7 @@
   padding-bottom: 40px !important;
 }
 .courseicon {
-  width: 300px !important;
+  width: auto !important;
   font-size: 80px !important;
   display: flex !important;
   justify-content: center !important;

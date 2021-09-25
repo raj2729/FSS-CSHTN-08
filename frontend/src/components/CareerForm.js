@@ -3,29 +3,31 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import { Box, Card, CardContent, Grid } from "@material-ui/core";
+import { Card, CardContent, Grid } from "@material-ui/core";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 // import Autocomplete from "@mui/material/Autocomplete";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 // import FormControl from "@mui/material/FormControl";
+<<<<<<< HEAD
 import Select from "@material-ui/core/Select";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 import TouchAppIcon from '@mui/icons-material/TouchApp';
+=======
+import axios from "axios"
+import { useSelector } from "react-redux";
+>>>>>>> master
 
 // Importing Header
 import Header from "./Header";
 
 const useStyles = makeStyles({
   field: {
-    margin: '20px 10px',
+    margin: "20px 10px",
     display: "block",
   },
   root: {
@@ -71,6 +73,15 @@ const CareerForm = ({ history, match }) => {
     }
   }, [success]);
 
+  const userLogin = useSelector((state) => state.userLogin);
+
+  const [USERINFO, SETUSERINFO] = useState(null)
+
+  useEffect(()=> {
+  
+    SETUSERINFO(userLogin.userInfo)
+  },[userLogin])
+
   useEffect(() => {
     console.log(jobList);
   }, [jobList]);
@@ -86,17 +97,32 @@ const CareerForm = ({ history, match }) => {
     setResumeLinkError(false);
     setEmailError(false);
 
-    if (jobType == "") setjobTypeError(true);
-    if (name == "") setnameError(true);
-    if (mobileNumber == 0) setMobileNumberError(true);
-    if (description == "") setDescriptionError(true);
-    if (ySelected == "") setYSelectedError(true);
-    if (linkedInProfile == "") setlinkedInProfileError(true);
-    if (resumeLink == "") setResumeLinkError(true);
-    if (email == "") setEmailError(true);
+    if (jobType === "") setjobTypeError(true);
+    if (name === "") setnameError(true);
+    if (mobileNumber === 0) setMobileNumberError(true);
+    if (description === "") setDescriptionError(true);
+    if (ySelected === "") setYSelectedError(true);
+    if (linkedInProfile === "") setlinkedInProfileError(true);
+    if (resumeLink === "") setResumeLinkError(true);
+    if (email === "") setEmailError(true);
   };
 
   const careerSubmitHandler = async () => {
+
+    console.log("in submit")
+    if(!USERINFO) {
+      alert("Log in")
+    } else {
+      console.log(USERINFO)
+      const headers = {"authorization": `Bearer ${USERINFO.token}`}
+      const {data} = await axios.get("user/applyForInstructor",{headers})
+      console.log("data", data)
+      if(!data.success) {
+        alert("Follow Instructions")
+      } else {
+        alert("Thanks for applying, will contact you shortly")
+      }
+    }
     // console.log("hello");
     // console.log(match.params.id);
     // const formData = new FormData();
@@ -107,37 +133,43 @@ const CareerForm = ({ history, match }) => {
     //       .post("https://api.cloudinary.com/v1_1/dizvyn9b5/video/upload", formData)
     //       .then((response) => {
     //         console.log(response.data.secure_url);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        // courseId: match.params.id,
-        name: name,
-        email: email,
-        mobileNumber: mobileNumber,
-        jobType: jobType,
-        description: description,
-        ySelected: ySelected,
-        linkedInProfile: linkedInProfile,
-        githubProfile: githubProfile,
-        resumeLink: resumeLink,
-        jobList: jobList,
-      }),
-    };
-    // setPublicIdd(response.data.secure_url);
-    fetch(`http://localhost:8080/career/careerForm`, requestOptions)
-      .then((response) => {
-        // console.log(response);
-        response.json();
-      })
-      .then((response) => {
-        console.log(response);
-      });
-    alert("You will be contacted sortly if you are shortlisted");
-    setSuccess(true);
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     // courseId: match.params.id,
+    //     name: name,
+    //     email: email,
+    //     mobileNumber: mobileNumber,
+    //     jobType: jobType,
+    //     description: description,
+    //     ySelected: ySelected,
+    //     linkedInProfile: linkedInProfile,
+    //     githubProfile: githubProfile,
+    //     resumeLink: resumeLink,
+    //     jobList: jobList,
+    //   }),
+    // };
+    // // setPublicIdd(response.data.secure_url);
+    // fetch(`http://localhost:8080/career/careerForm`, requestOptions)
+    //   .then((response) => {
+    //     // console.log(response);
+    //     response.json();
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //   });
+    // alert("You will be contacted sortly if you are shortlisted");
+    // setSuccess(true);
   };
 
-  const jobsList = ["Backend Developer", "Frontend Developer", "UI/UX Developer", "Sales and Marketing", "Content Writing"];
+  const jobsList = [
+    "Backend Developer",
+    "Frontend Developer",
+    "UI/UX Developer",
+    "Sales and Marketing",
+    "Content Writing",
+  ];
   const handleChange = (event) => {
     const {
       target: { value },
@@ -146,16 +178,6 @@ const CareerForm = ({ history, match }) => {
       // On autofill we get a the stringified value.
       typeof value === "string" ? value.split(",") : value
     );
-  };
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
   };
 
   return (
@@ -167,21 +189,21 @@ const CareerForm = ({ history, match }) => {
         direction="column"
         alignItems="center"
         justify="center"
-        style={{ margin: '80px 0px 10px' }}
+        style={{ margin: "80px 0px 10px" }}
       >
         <Card
           style={{
             width: 800,
             padding: "25px",
             margin: "0 auto",
-            boxShadow: '5px 5px 5px 5px lightgrey'
+            boxShadow: "5px 5px 5px 5px lightgrey",
           }}
         >
           <CardContent>
             <Typography gutterBottom variant="h5" align="center">
               Career Form
             </Typography>
-            <FormControl component="fieldset" className={classes.field} >
+            <FormControl component="fieldset" className={classes.field}>
               <FormLabel component="legend">Job Type</FormLabel>
               <RadioGroup
                 row
@@ -190,11 +212,20 @@ const CareerForm = ({ history, match }) => {
                 onChange={(event) => setjobType(event.target.value)}
                 error={jobTypeError}
               >
-                <FormControlLabel value="internship" control={<Radio />} label="Internship" />
+                <FormControlLabel
+                  value="internship"
+                  control={<Radio />}
+                  label="Internship"
+                />
                 <FormControlLabel value="job" control={<Radio />} label="Job" />
-                <FormControlLabel value="instructor" control={<Radio />} label="Instructor" />
+                <FormControlLabel
+                  value="instructor"
+                  control={<Radio />}
+                  label="Instructor"
+                />
               </RadioGroup>
             </FormControl>
+<<<<<<< HEAD
             {jobType === 'instructor' ? <><h3 className={classes.field}>Complete your Profile</h3>
             <Button
                   type="submit"
@@ -214,6 +245,26 @@ const CareerForm = ({ history, match }) => {
                   Apply Now
                 </Button>
             </> : (
+=======
+            {jobType === "instructor" ? (
+              <>
+              <h3 className={classes.field}>Make sure you have completed your profile & Logged In</h3>
+              <Button
+                  type="submit"
+                  size="large"
+                  classes={{
+                    root: classes.root,
+                    label: classes.label,
+                  }}
+                  style={{ marginBottom: "100px" }}
+                  startIcon={<AddCircleIcon />}
+                  onClick={()=>careerSubmitHandler()}
+                >
+                  Submit
+                </Button>
+              </>
+            ) : (
+>>>>>>> master
               <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                 <TextField
                   onChange={(e) => setName(e.target.value)}
@@ -250,7 +301,7 @@ const CareerForm = ({ history, match }) => {
                   id="standard-select-currency"
                   className={classes.field}
                   select
-                  variant='outlined'
+                  variant="outlined"
                   label="Select"
                   value={jobList}
                   fullWidth
