@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     maxWidth: 345,
+    boxShadow:"5px 5px 5px 5px lightgray",
   },
   media: {
     height: 140,
@@ -108,6 +109,10 @@ function MyCoursesUser() {
         <Grid container spacing={8}>
           {courses.data.map((course, index) => (
             <Grid item key={index} xs={12} sm={6} md={3}>
+            <Link
+                    to={`/course/${course.courseId._id}`}
+                    style={{ textDecoration: "none" }}
+                  >
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.media}
@@ -126,16 +131,14 @@ function MyCoursesUser() {
                 </CardContent>
                 {/* </CardActionArea> */}
                 <CardActions>
-                  <Link
-                    to={`/course/${course.courseId._id}`}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <Button size="large" color="primary">
+                 
+                    {/* <Button size="large" color="primary">
                       Start Course
-                    </Button>
-                  </Link>
+                    </Button> */}
+                
                 </CardActions>
               </Card>
+              </Link>
             </Grid>
           ))}
         </Grid>

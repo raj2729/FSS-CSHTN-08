@@ -14,7 +14,6 @@
   margin-left: 10%;
   margin-right: 10%;
   padding-bottom: 40px !important;
-  margin-bottom: 40px !important;
 }
 .groupicon {
   width: 300px !important;
@@ -46,16 +45,9 @@
   margin: 1px auto !important;
 }
 .piechart {
-  padding: 10px !important;
-  margin: 20px !important;
-  /* box-shadow: 5px 5px 25px 5px gray !important;
-    position: relative !important;
-    left: 300px !important; */
+  /* padding: 10px !important;
+    margin: 20px !important; */
+  box-shadow: 5px 5px 25px 5px gray !important;
+  position: relative !important;
+  bottom: 50px !important;
 }
-/* .second-grid {
-  margin-left: 10% !important;
-  margin-right: 10% !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-} */

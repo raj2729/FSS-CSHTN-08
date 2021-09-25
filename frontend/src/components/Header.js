@@ -507,11 +507,11 @@ const Header = () => {
           style={{ textDecoration: "none", color: "black" }}
         >
           <List>
-            <ListItem button key="Career Oppotunities">
+            <ListItem button key="Career Opportunities">
               <ListItemIcon>
                 <BusinessCenterIcon />
               </ListItemIcon>
-              <ListItemText primary="Career Oppotunities" />
+              <ListItemText primary="Career Opportunities" />
             </ListItem>
           </List>
         </Link>

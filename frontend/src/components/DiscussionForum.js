@@ -69,9 +69,13 @@ const styles = makeStyles((theme) => ({
         borderRadius: "10px",
     },
     add: {
-        position: "fixed",
-        bottom: theme.spacing(2),
-        right: theme.spacing(3),
+        // position: "fixed",
+        // bottom: theme.spacing(2),
+        // right: theme.spacing(3),
+        // top: theme.spacing(1),
+        position: 'absolute',
+        right: "40px",
+        // marginBottom:"40px !important",
         fontSize: 'large'
     },
     modal: {
@@ -224,6 +228,17 @@ function DiscussionForum() {
                 </Toolbar>
             </AppBar>
             <br />
+            <Button
+                variant='contained'
+                color='primary'
+                startIcon={<AddIcon />}
+                className={classes.add}
+                onClick={handleOpen2}
+            >
+                Ask Question
+            </Button>
+            <br />
+            <br /><br />
             {questions.map((question, index) => {
                 const profile = question.profile
                 if (question.question.includes(filter)) {
@@ -286,7 +301,24 @@ function DiscussionForum() {
                 }
             })
             }
-            <Button
+            {/* <Card style={{width: "60%", padding:"10px", boxShadow: "5px 5px 25px 5px gray", margin:"5% auto", borderRadius:"30px"}}>
+                <h1 style={{textAlign:"center"}}>Join a meet with your Instructor</h1>
+                <Grid container alignItems="center" justify="center">
+                    <Grid item xs={12} sm={6} style={{marginLeft:"10px"}}>
+                        <h3>Link : <span style={{color:"blue", textDecoration:"underline"}}>meet.google.utr-btn-pgt</span>
+                        <br />
+                        On 21 st October,2021 <br />At 4.30 pm IST
+                        </h3>
+                        
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <img src="https://www.pngkey.com/png/full/805-8050701_png-file-svg-meeting-icon-svg.png" style={{width:"200px"}}/>
+                    </Grid>
+
+                </Grid>
+
+            </Card> */}
+            {/* <Button
                 variant='contained'
                 color='primary'
                 startIcon={<AddIcon />}
@@ -294,7 +326,7 @@ function DiscussionForum() {
                 onClick={handleOpen2}
             >
                 Ask Question
-            </Button>
+            </Button> */}
             <Modal
                 className={classes.modal}
                 open={open1}
@@ -351,7 +383,24 @@ function DiscussionForum() {
                     </Button>
                 </Paper>
             </Modal>
-        </Container >
+            <Card style={{width: "60%", padding:"10px", boxShadow: "5px 5px 25px 5px gray", margin:"5% auto", borderRadius:"30px"}}>
+                <h1 style={{textAlign:"center"}}>Join a meet with your Instructor</h1>
+                <Grid container alignItems="center" justify="center">
+                    <Grid item xs={12} sm={6} style={{marginLeft:"10px"}}>
+                        <h3>Link : <span style={{color:"blue", textDecoration:"underline"}}>meet.google.utr-btn-pgt</span>
+                        <br />
+                        On 21 st October,2021 <br />At 4.30 pm IST
+                        </h3>
+                        
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <img src="https://www.pngkey.com/png/full/805-8050701_png-file-svg-meeting-icon-svg.png" style={{width:"200px"}}/>
+                    </Grid>
+
+                </Grid>
+
+            </Card>
+        </Container>
     )
 }
 

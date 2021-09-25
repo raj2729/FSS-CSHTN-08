@@ -41,6 +41,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    width:"100%",
   },
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
@@ -65,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    zIndex: 1,
   },
   drawerPaper: {
     width: drawerWidth,
@@ -94,16 +96,27 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
   card: {
-    maxWidth: 345,
+    // maxWidth: 445,
+    width: 220,
+    boxShadow:"5px 5px 5px 5px lightgray",
+    // marginTop:"10px"
+
   },
   media: {
     height: 140,
   },
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(3),
 
     justifyContent: "center",
   },
+  
+
+
+
+
+
+  
 }));
 
 function MyCoursesInstr({ history, match }) {
@@ -146,7 +159,7 @@ function MyCoursesInstr({ history, match }) {
         // })}
         >
           <div className={classes.drawerHeader} />
-          <Box textAlign="center">
+          <Box textAlign="center" style={{zIndex:"0", marginLeft:"-170px"}}>
             <Link to={`/createCourse`} style={{ textDecoration: "none" }}>
               <Button
                 variant="contained"
@@ -159,9 +172,14 @@ function MyCoursesInstr({ history, match }) {
               </Button>
             </Link>
           </Box>
-          <Grid container spacing={8}>
+
+          <Grid container spacing={8} style={{zIndex:"0", marginLeft:"-180px"}}>
             {instructorCourses.data.map((course, index) => (
               <Grid item key={index} xs={12} sm={6} md={3}>
+              <Link
+                      to={`/course/${course._id}`}
+                      style={{ textDecoration: "none" }}
+                    >
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.media}
@@ -177,16 +195,14 @@ function MyCoursesInstr({ history, match }) {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Link
-                      to={`/course/${course._id}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <Button size="large" color="primary">
+                   
+                      {/* <Button size="large" color="primary">
                         Go To Course
-                      </Button>
-                    </Link>
+                      </Button> */}
+                   
                   </CardActions>
                 </Card>
+                </Link>
               </Grid>
             ))}
           </Grid>

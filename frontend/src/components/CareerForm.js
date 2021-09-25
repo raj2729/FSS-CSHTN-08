@@ -18,6 +18,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 // import FormControl from "@mui/material/FormControl";
 import Select from "@material-ui/core/Select";
 import { createTheme, ThemeProvider } from "@material-ui/core";
+import TouchAppIcon from '@mui/icons-material/TouchApp';
 
 // Importing Header
 import Header from "./Header";
@@ -194,7 +195,25 @@ const CareerForm = ({ history, match }) => {
                 <FormControlLabel value="instructor" control={<Radio />} label="Instructor" />
               </RadioGroup>
             </FormControl>
-            {jobType === 'instructor' ? <h3 className={classes.field}>Complete your Profile</h3> : (
+            {jobType === 'instructor' ? <><h3 className={classes.field}>Complete your Profile</h3>
+            <Button
+                  type="submit"
+                  size="large"
+                  style={{marginTop:"30px !important"}}
+                  // classes={{
+                  //   root: classes.root,
+                  //   label: classes.label,
+                  // }}
+                  variant="contained"
+                  color="primary"
+                  style={{ marginBottom: "100px" }}
+                  startIcon={<TouchAppIcon />}
+                  // onClick={careerSubmitHandler}
+                >
+                
+                  Apply Now
+                </Button>
+            </> : (
               <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                 <TextField
                   onChange={(e) => setName(e.target.value)}
@@ -298,10 +317,12 @@ const CareerForm = ({ history, match }) => {
                 <Button
                   type="submit"
                   size="large"
-                  classes={{
-                    root: classes.root,
-                    label: classes.label,
-                  }}
+                  // classes={{
+                  //   root: classes.root,
+                  //   label: classes.label,
+                  // }}
+                  variant="contained"
+                  color="primary"
                   style={{ marginBottom: "100px" }}
                   startIcon={<AddCircleIcon />}
                   onClick={careerSubmitHandler}

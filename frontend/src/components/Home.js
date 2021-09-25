@@ -58,6 +58,8 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "5px 5px 5px 5px lightgrey",
     display: "flex",
     flexDirection: "column",
+    // marginTop:"20px !important",
+    // width:"100px !important"
   },
   cardMedia: {
     margin: "2%",

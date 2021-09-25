@@ -142,10 +142,12 @@ function ContactForm() {
                   <Button
                     type="submit"
                     size="large"
-                    classes={{
-                      root: classes.root,
-                      label: classes.label,
-                    }}
+                    // classes={{
+                    //   root: classes.root,
+                    //   label: classes.label,
+                    // }}
+                    variant="contained"
+                    color="primary"
                     fullWidth
                     onClick={contacFormSubmitHandler}
                   >

@@ -11,10 +11,9 @@ import DateFnsUtils from '@date-io/date-fns';
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Grid from '@material-ui/core/Grid';
 import Card from "@material-ui/core/Card"
-import "./admindashboard.css"
+import "./adminanalytics.css"
 import GroupIcon from '@material-ui/icons/Group';
 import ComputerIcon from '@material-ui/icons/Computer';
-import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 // actions
 import { getAllUsers, getAllInstructors, getCoursesSummary, getAllOrders } from "../actions/adminActions";
 import CourseTable from "./AdminCourses";
@@ -25,7 +24,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 // var Component = React.Component;
 import CanvasJSReact from './canvasjs.react';
 var CanvasJS = CanvasJSReact.CanvasJS;
@@ -41,7 +39,8 @@ const rows = [
   createData('AngularJS', 262, 16.0),
   createData('Django', 262, 16.0),
 ];
-function AdminDashboard() {
+
+const AdminAnalytics = () => {
     const dispatch = useDispatch()
     const [date, changeDate] = useState(new Date());
 
@@ -122,7 +121,7 @@ function AdminDashboard() {
       }
     return (
         <div>
-            <div style={{display:"flex", justifyContent:"space-between", backgroundColor:"black"}}>
+         <div style={{display:"flex", justifyContent:"space-between", backgroundColor:"black"}}>
                 <Button  style={{ textDecoration: "none", color: "white" }} onClick={()=>{setOpen(true)}}><MenuIcon/>Admin Panel</Button>
                 <Button  style={{ textDecoration: "none", color: "white" }} onClick={()=>{alert('Log out implement karna hai')}}>Logout<ExitToAppIcon/></Button>
             </div>
@@ -133,125 +132,56 @@ function AdminDashboard() {
             >
                 {list()}
             </Drawer>
-            {mode==="dashboard" && 
-
-
-            <div>
-            <h1 style={{paddingLeft:"40px", paddingTop:"20px", paddingBottom:"20px"}}>Admin Panel Dashboard</h1>
+         <h1 style={{paddingLeft:"40px", paddingTop:"20px", paddingBottom:"20px"}}>Admin Panel Analytics</h1>
             <br />
-            {/* if you want 3 cards in a line */}
-            <Grid container alignItems="center" justify="center">
-            
-              <Grid item xs={12} sm={4}>
-              <Card className="userscard">
-                  <h1 style={{textAlign:"center"}}>Users</h1>
-                  <GroupIcon className="groupicon" />
-                  <h1 style={{textAlign:"center"}}>4971</h1>
-                </Card>
-             
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <Card className="userscard">
-                  <h1 style={{textAlign:"center"}}>Instructors</h1>
-                  <GroupIcon className="groupicon" />
-                  <h1 style={{textAlign:"center"}}>4971</h1>
-                </Card>
-              </Grid>
-              <Grid item xs={12} sm={4}>
-              <Card className="userscard">
-                  <h1 style={{textAlign:"center"}}>Courses</h1>
-                  <ComputerIcon className="courseicon" />
-                  <h1 style={{textAlign:"center"}}>4971</h1>
-                </Card>
-              
-              
-              </Grid> 
-              <Grid item xs={12} sm={4}>
-              <br />
-              <Card className="userscard">
-                  <h1 style={{textAlign:"center"}}>Revenue(Rs.)</h1>
-                  <MonetizationOnIcon className="courseicon" />
-                  <h1 style={{textAlign:"center"}}>4971</h1>
-              </Card>
-                                                                     
-              </Grid>
-              <Grid item xs={12} sm={4}>
-              <br />
-                      <Card className="userscard">
-                        <h1 style={{textAlign:"center"}}>Hours</h1>
-                        <AccessTimeFilledIcon className="courseicon" />
-                        <h1 style={{textAlign:"center"}}>4971</h1>
-                      </Card>
-              </Grid>
-            </Grid>
-
-
-
-              {/* if you want 2 cards in a line */}
-            {/* <div className="second-grid">
             <Grid container>
-              <Grid item xs={12} sm={6}>
-              <br />
-              <Card className="userscard">
-                  <h1 style={{textAlign:"center"}}>Revenue(Rs.)</h1>
-                  <MonetizationOnIcon className="courseicon" />
-                  <h1 style={{textAlign:"center"}}>4971</h1>
-              </Card>
-                                                                     
-              </Grid>
-              <Grid item xs={12} sm={6}>
-              <br />
-                      <Card className="userscard">
-                        <h1 style={{textAlign:"center"}}>Hours</h1>
-                        <AccessTimeFilledIcon className="courseicon" />
-                        <h1 style={{textAlign:"center"}}>4971</h1>
-                      </Card>
-              </Grid>
-            
-            </Grid> 
-            </div>*/}
-                                                                 
-          
-            </div>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            }
-            {mode==="courses" && <CourseTable/>}
-            {mode==="users" && <UserTable/>}
-            {mode==="instructors" && <InstructorTable/>}
-            {mode==="orders" && <OrdersTable/>}
+                <Grid item xs={12} sm={3} style={{padding: "20px", marginRight:"5%"}}>
+                                            <TableContainer className="table" component={Paper}>
+                                            <Table sx={{ minWidth: "300px" }} size="small" aria-label="a dense table">
+                                            <TableHead>
+                                            <h3 style={{paddingLeft:"40px"}}>Top&nbsp;Selling&nbsp;Courses</h3>
+                                            <TableRow>
+                                
+                                            <TableCell><h4>Course</h4></TableCell>
+                                            <TableCell><h4>Sales</h4></TableCell>
+                                            <TableCell><h4>Price</h4></TableCell>
+                                    
+                                            </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                            {rows.map((row) => (
+                                                <TableRow
+                                                key={row.name}
+                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                >
+                                            <TableCell component="th" scope="row">
+                                                {row.name}
+                                            </TableCell>
+                                            <TableCell>{row.calories}</TableCell>
+                                            <TableCell>{row.fat}</TableCell>
+                                            <TableCell>{row.carbs}</TableCell>
+                                            <TableCell>{row.protein}</TableCell>
+                                            </TableRow>
+                                            ))}
+                                            </TableBody>
+                                            </Table>
+                                            </TableContainer>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                                            <div className="piechart">
+                                            <CanvasJSChart options = {options} 
+				                            //  onRef={ref => this.chart = ref}
+			                                /></div>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                                            <div className="piechart">
+                                            <CanvasJSChart options = {splineoptions}
+                                            /* onRef={ref => this.chart = ref} */
+                                            /></div>
+                </Grid>
+            </Grid>
         </div>
-     );
+    )
 }
 
-export default AdminDashboard;
-
- {/* <div className="calendar">
-                                                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                                                      <DatePicker
-                                                                        autoOk
-                                                                        orientation="landscape"
-                                                                        variant="static"
-                                                                        openTo="date"
-                                                                        value={date}
-                                                                        onChange={changeDate}
-                                                                        
-                                                                      />
-                                                                      </MuiPickersUtilsProvider>
-                                                                      </div>  */}
+export default AdminAnalytics

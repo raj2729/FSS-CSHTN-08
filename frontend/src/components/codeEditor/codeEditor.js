@@ -4,6 +4,7 @@ import Pusher from "pusher-js";
 import pushid from "pushid";
 import axios from "axios";
 import Header from "../Header";
+import { Button } from "@material-ui/core";
 
 
 import "./codeEditor.css";
@@ -51,6 +52,16 @@ class CodeEditor extends Component {
         js: data.js
       });
     });
+  }
+
+  SaveCode = () => {
+    console.log(this.state.html);
+    // const element = document.createElement("a");
+    // const file = new Blob(this.state.html, {type: 'text/plain'});
+    // element.href = URL.createObjectURL(file);
+    // element.download = "myFile.html";
+    // // document.body.appendChild(element); // Required for this to work in FireFox
+    // element.click();
   }
 
   syncUpdates = () => {
@@ -109,6 +120,7 @@ class CodeEditor extends Component {
           <div className="code-editor html-code">
             <div className="editor-header">HTML</div>
             <CodeMirror
+            id="html"
               value={html}
               options={{
                 mode: "htmlmixed",
@@ -147,6 +159,7 @@ class CodeEditor extends Component {
           </div>
         </section>
         <section className="result">
+        {/* <Button style={{padding:"5px", margin:"10px"}} variant="contained" color="primary" onClick={this.SaveCode}>SAVE CODE</Button> */}
           <iframe title="result" className="iframe" ref="iframe" />
         </section>
       </div>

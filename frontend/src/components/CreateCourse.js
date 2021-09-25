@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import Box from "@material-ui/core/Box";
+import { Card } from "@material-ui/core";
 
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../actions/userActions";
@@ -144,7 +145,13 @@ export default function CreateCourse() {
             Create a New Course{" "}
           </Typography>
         </Box>
-
+        <Card style={{
+            width: 800,
+            padding: "25px",
+            margin: "0 auto",
+            // borderRadius:"30px",
+            boxShadow: '5px 5px 5px 5px lightgrey'
+          }}>
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
           <TextField
             className={classes.field}
@@ -211,6 +218,8 @@ export default function CreateCourse() {
               root: classes.root,
               // label: classes.label,
             }}
+            // variant="contained"
+            color="primary"
             onChange={(event) => {
               setImage(event.target.files[0]);
               // console.log(image);
@@ -232,12 +241,15 @@ export default function CreateCourse() {
               root: classes.root,
               label: classes.label,
             }}
+            variant="contained"
+            color="primary"
             startIcon={<AddCircleIcon />}
             onClick={createCourseSubmitHandler}
           >
             Add Course
           </Button>
         </form>
+        </Card>
       </Container>
     </>
   );

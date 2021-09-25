@@ -19,6 +19,7 @@ import Quiz from "./components/quiz/Quiz";
 import DiscussionForum from "./components/DiscussionForum";
 import InstructorAssignmentPage from "./components/InstructorAssignmentPage";
 import CodeEditor from "./components/codeEditor/codeEditor";
+import AdminAnalytics from "./components/AdminAnalytics"
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
       <Route path="/assignments/:id" component={Assignments} exact></Route>
       <Route path="/admin/login" component={AdminLogin} exact></Route>
       <Route path="/admin/access" component={AdminDashboard} exact></Route>
+      <Route path="/admin/analytics" component={AdminAnalytics} exact></Route>
       <Route path="/mycourses/:id" component={MyCoursesUser} exact></Route>
       <Route path="/contactForm" component={ContactForm} exact></Route>
       <Route path="/careerForm" component={CareerForm} exact></Route>
